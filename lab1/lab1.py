@@ -4,7 +4,7 @@ from math import factorial
 class Potencija:
     def __init__(self, potencija=0, koeficjent=0):
         self.potencija = potencija
-        self.koeficjent = 1
+        self.koeficjent = koeficjent
 
     def __add__(self, other):
         if (self.potencija != other.potencija):
