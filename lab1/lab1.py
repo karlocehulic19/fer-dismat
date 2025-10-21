@@ -66,7 +66,7 @@ def main():
     duljine_slvoa = input("")
     a, b, c, d, e = duljine_slvoa.split(" ")
     L = input("")
-    rez = lab1(a, b, c, d, e, L)
+    rez = lab1(int(a), int(b), int(c), int(d), int(e), int(L))
     print(rez)
 
 
