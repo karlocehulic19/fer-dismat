@@ -2,7 +2,7 @@ from math import factorial
 
 
 class Potencija:
-    def __init__(self, potencija=0, koeficjent=0):
+    def __init__(self, koeficjent, potencija):
         self.potencija = potencija
         self.koeficjent = koeficjent
 
@@ -13,30 +13,30 @@ class Potencija:
         return Potencija(self.koeficjent + other.koeficjent, self.potencija)
 
     def __mul__(self, other):
-        return Potencija(self.potencija + other.potencija, self.koeficjent * other.koeficjent)
+        return Potencija(self.koeficjent * other.koeficjent, self.potencija + other.potencija)
 
     def __repr__(self):
-        return f"{self.koeficjent} x^{self.potencija}"
+        return f"{self.koeficjent}x^{self.potencija}"
 
 
 class EksponencijalnaIzvodnica:
     def __init__(self, start=None):
         self.koeficjenti = {}
-        if start:
+        if start != None:
             for i in range(start + 1):
-                self.koeficjenti[i] = Potencija(i, 1 / factorial(i))
+                self.koeficjenti[i] = Potencija(1 / factorial(i), i)
 
     def dodaj_potenciju(self, potencija):
         if (potencija.potencija not in self.koeficjenti):
             self.koeficjenti[potencija.potencija] = Potencija(
-                potencija.potencija)
+                0, potencija.potencija)
 
         self.koeficjenti[potencija.potencija] += potencija
 
     def dohvati_potenciju(self, potencija):
         if potencija not in self.koeficjenti:
             return 0
-        return self.koeficjenti[potencija].koeficjenti * factorial(potencija)
+        return self.koeficjenti[potencija].koeficjent * factorial(potencija)
 
     @staticmethod
     def pomnozi_vise(lista):
@@ -48,8 +48,8 @@ class EksponencijalnaIzvodnica:
 
     def __mul__(self, other):
         nova_izvodnica = EksponencijalnaIzvodnica()
-        for _, p1 in self.koeficjenti:
-            for _, p2 in other.koeficjenti:
+        for p1 in self.koeficjenti.values():
+            for p2 in other.koeficjenti.values():
                 nova_izvodnica.dodaj_potenciju(p1 * p2)
 
         return nova_izvodnica
@@ -71,9 +71,9 @@ def main():
 
 
 def test():
-    print("LAB RES: ", lab1(2, 2, 2, 2, 2, 10))
-    # assert lab1(2, 2, 2, 2, 2, 10) == 11340
-    # assert lab1(2, 2, 2, 2, 2, 1) == 5
+    print(lab1(2, 2, 2, 2, 2, 2))
+    assert lab1(2, 2, 2, 2, 2, 10) == 113400
+    assert lab1(2, 2, 2, 2, 2, 1) == 5
 
 
 if __name__ == "__main__":
