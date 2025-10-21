@@ -1,7 +1,7 @@
 from math import factorial
 
 
-class Potencija:
+class Oznaka:
     def __init__(self, koeficjent, potencija):
         self.potencija = potencija
         self.koeficjent = koeficjent
@@ -10,10 +10,10 @@ class Potencija:
         if (self.potencija != other.potencija):
             raise Exception("Nemoguce zbrojiti dvije razlicite potencije")
 
-        return Potencija(self.koeficjent + other.koeficjent, self.potencija)
+        return Oznaka(self.koeficjent + other.koeficjent, self.potencija)
 
     def __mul__(self, other):
-        return Potencija(self.koeficjent * other.koeficjent, self.potencija + other.potencija)
+        return Oznaka(self.koeficjent * other.koeficjent, self.potencija + other.potencija)
 
     def __repr__(self):
         return f"{self.koeficjent}x^{self.potencija}"
@@ -24,14 +24,14 @@ class EksponencijalnaIzvodnica:
         self.koeficjenti = {}
         if start != None:
             for i in range(start + 1):
-                self.koeficjenti[i] = Potencija(1 / factorial(i), i)
+                self.koeficjenti[i] = Oznaka(1 / factorial(i), i)
 
-    def dodaj_potenciju(self, potencija):
-        if (potencija.potencija not in self.koeficjenti):
-            self.koeficjenti[potencija.potencija] = Potencija(
-                0, potencija.potencija)
+    def dodaj_oznaku(self, oznaka):
+        if (oznaka.potencija not in self.koeficjenti):
+            self.koeficjenti[oznaka.potencija] = Oznaka(
+                0, oznaka.potencija)
 
-        self.koeficjenti[potencija.potencija] += potencija
+        self.koeficjenti[oznaka.potencija] += oznaka
 
     def dohvati_potenciju(self, potencija):
         if potencija not in self.koeficjenti:
@@ -50,7 +50,7 @@ class EksponencijalnaIzvodnica:
         nova_izvodnica = EksponencijalnaIzvodnica()
         for p1 in self.koeficjenti.values():
             for p2 in other.koeficjenti.values():
-                nova_izvodnica.dodaj_potenciju(p1 * p2)
+                nova_izvodnica.dodaj_oznaku(p1 * p2)
 
         return nova_izvodnica
 
