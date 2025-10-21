@@ -70,12 +70,5 @@ def main():
     print(rez)
 
 
-def test():
-    print(lab1(2, 2, 2, 2, 2, 2))
-    assert lab1(2, 2, 2, 2, 2, 10) == 113400
-    assert lab1(2, 2, 2, 2, 2, 1) == 5
-
-
 if __name__ == "__main__":
-    # main()
-    test()
+    main()
