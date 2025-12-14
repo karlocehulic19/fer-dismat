@@ -3,6 +3,7 @@ from collections import defaultdict
 
 def getEdgesFromFile(fileName):
     edges = defaultdict(list)
+    N = 0
     with open(fileName, "r") as file:
         N = int(file.readline())
         for i in range(N):
@@ -11,46 +12,49 @@ def getEdgesFromFile(fileName):
                 if line[j] == "1":
                     edges[i + 1].append(j + 1)
 
-    return dict(edges)
+    return [dict(edges), N]
 
 
-def getCycleOfThree(adjList):
+def getCycleOfThree(adjList, size):
     # store each sorted list in a set, return the length of sets
     TARGET_SIZE = 3
 
-    cycles = set()
-    done = set()
+    def testConnection(a, b):
+        if a in adjList[b] and b in adjList[a]:
+            return True
+        if a in adjList[b] or b in adjList[a]:
+            raise Exception("Invlid graph provided")
+        return False
+
     path = []
 
-    def dfs(currSize, currElement):
-        if currElement in done:
-            return
+    def testPath():
+        for i in range(3):
+            for j in range(i + 1, 3):
+                if not testConnection(path[i], path[j]):
+                    return False
+        return True
 
+    def dfs(currSize, i):
+        count = 0
         if currSize == TARGET_SIZE:
-            first = path[0]
-            if first in adjList[currElement]:
-                sortedStringPath = []
-                for elem in sorted(path + [currElement]):
-                    sortedStringPath.append(str(elem))
+            path.append(i + 1)
+            count += testPath()
+            path.pop()
+            return count
 
-                cycles.add(",".join(sortedStringPath))
+        for j in range(i, size):
+            path.append(j + 1)
+            count += dfs(currSize + 1, j + 1)
+            path.pop()
 
-        path.append(currElement)
-        done.add(currElement)
-        for nei in adjList[currElement]:
-            dfs(currSize + 1, nei)
+        return count
 
-        path.pop()
-        done.remove(currElement)
-
-    for v in adjList:
-        dfs(1, v)
-
-    return cycles
+    return dfs(0, 0)
 
 
 if __name__ == "__main__":
     fileName = input()
-    edges = getEdgesFromFile(fileName)
-    result = getCycleOfThree(edges)
-    print(len(result))
+    edges, n = getEdgesFromFile(fileName)
+    result1 = getCycleOfThree(edges, n)
+    print(result1)
