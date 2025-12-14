@@ -12,7 +12,7 @@ def getEdgesFromFile(fileName):
                 if line[j] == "1":
                     edges[i + 1].append(j + 1)
 
-    return [dict(edges), N]
+    return [edges, N]
 
 
 def getCyclesNumer(targetSize, adjList, size):
@@ -25,29 +25,22 @@ def getCyclesNumer(targetSize, adjList, size):
 
     path = []
 
-    def testPath():
-        for i in range(targetSize):
-            for j in range(i + 1, targetSize):
-                if not testConnection(path[i], path[j]):
-                    return False
-        return True
+    def dfs(i):
+        if len(path) > 1 and not testConnection(path[-2], path[-1]):
+            return 0
+        if len(path) == targetSize:
+            return testConnection(path[0], path[-1])
 
-    def dfs(currSize, i):
         count = 0
-        if currSize == targetSize:
-            path.append(i + 1)
-            count += testPath()
-            path.pop()
-            return count
 
         for j in range(i, size):
             path.append(j + 1)
-            count += dfs(currSize + 1, j + 1)
+            count += dfs(j + 1)
             path.pop()
 
         return count
 
-    return dfs(0, 0)
+    return dfs(0)
 
 
 if __name__ == "__main__":
