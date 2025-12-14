@@ -29,8 +29,8 @@ def getCycleOfThree(adjList, size):
     path = []
 
     def testPath():
-        for i in range(3):
-            for j in range(i + 1, 3):
+        for i in range(TARGET_SIZE):
+            for j in range(i + 1, TARGET_SIZE):
                 if not testConnection(path[i], path[j]):
                     return False
         return True
