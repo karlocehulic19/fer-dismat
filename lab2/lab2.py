@@ -55,4 +55,4 @@ if __name__ == "__main__":
     edges, n = getEdgesFromFile(fileName)
     CYCLE_LENGTH = 3
     result1 = getCyclesNumer(CYCLE_LENGTH, edges, n)
-    print(result1)
+    print("Rjesenje: ", result1)
