@@ -15,10 +15,7 @@ def getEdgesFromFile(fileName):
     return [dict(edges), N]
 
 
-def getCycleOfThree(adjList, size):
-    # store each sorted list in a set, return the length of sets
-    TARGET_SIZE = 3
-
+def getCyclesNumer(targetSize, adjList, size):
     def testConnection(a, b):
         if a in adjList[b] and b in adjList[a]:
             return True
@@ -29,15 +26,15 @@ def getCycleOfThree(adjList, size):
     path = []
 
     def testPath():
-        for i in range(TARGET_SIZE):
-            for j in range(i + 1, TARGET_SIZE):
+        for i in range(targetSize):
+            for j in range(i + 1, targetSize):
                 if not testConnection(path[i], path[j]):
                     return False
         return True
 
     def dfs(currSize, i):
         count = 0
-        if currSize == TARGET_SIZE:
+        if currSize == targetSize:
             path.append(i + 1)
             count += testPath()
             path.pop()
@@ -56,5 +53,6 @@ def getCycleOfThree(adjList, size):
 if __name__ == "__main__":
     fileName = input()
     edges, n = getEdgesFromFile(fileName)
-    result1 = getCycleOfThree(edges, n)
+    CYCLE_LENGTH = 3
+    result1 = getCyclesNumer(CYCLE_LENGTH, edges, n)
     print(result1)
