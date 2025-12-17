@@ -44,7 +44,7 @@ def getCyclesNumer(targetSize, adjList, size):
 
 
 if __name__ == "__main__":
-    fileName = input()
+    fileName = input("Unesite ime datoteke s podacima o grafu: ")
     edges, n = getEdgesFromFile(fileName)
     CYCLE_LENGTH = 3
     result1 = getCyclesNumer(CYCLE_LENGTH, edges, n)
